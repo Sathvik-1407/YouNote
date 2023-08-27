@@ -13,11 +13,11 @@ const NoteState = (props) => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkM2U5MzNkZGVhMzVmNmI5NTVhYTA1In0sImlhdCI6MTY5MTYxMzU3MH0.3d-UYUZ1O-bgPsg_sjrcYMRxNcy9B3mEEdfQTT96F4U"
+        "auth-token": localStorage.getItem('token')
       }
     });
     const json = await response.json()
-    console.log(json)
+    
     setNotes(json)
   }
 
@@ -29,7 +29,7 @@ const NoteState = (props) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkM2U5MzNkZGVhMzVmNmI5NTVhYTA1In0sImlhdCI6MTY5MTYxMzU3MH0.3d-UYUZ1O-bgPsg_sjrcYMRxNcy9B3mEEdfQTT96F4U"
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag })
     });
@@ -43,15 +43,16 @@ const NoteState = (props) => {
     // API Call
     const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
       method: 'DELETE',
-      headers: {
+      headers: { 
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkM2U5MzNkZGVhMzVmNmI5NTVhYTA1In0sImlhdCI6MTY5MTYxMzU3MH0.3d-UYUZ1O-bgPsg_sjrcYMRxNcy9B3mEEdfQTT96F4U"
+        "auth-token": localStorage.getItem('token')
       }
     });
     const json = response.json();
-    console.log(json)
+    console.log(json);
+    
 
-    console.log("Deleting the note with id" + id);
+    
     const newNotes = notes.filter((note) => { return note._id !== id })
     setNotes(newNotes)
   }
@@ -63,12 +64,14 @@ const NoteState = (props) => {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjRkM2U5MzNkZGVhMzVmNmI5NTVhYTA1In0sImlhdCI6MTY5MTYxMzU3MH0.3d-UYUZ1O-bgPsg_sjrcYMRxNcy9B3mEEdfQTT96F4U"
+        "auth-token": localStorage.getItem('token')
       },
       body: JSON.stringify({ title, description, tag })
     });
     const json = await response.json();
     console.log(json)
+    
+
 
     let newNotes = JSON.parse(JSON.stringify(notes))
     // Logic to edit in client
